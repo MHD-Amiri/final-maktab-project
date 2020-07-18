@@ -1,9 +1,19 @@
-var express = require('express');
-var router = express.Router();
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+const express = require('express');
+const router = express.Router();
+const authenticate = require('../config/auth');
+// GET home page
+router.get('/', (req, res, next) => {
+  res.render('pages/home', {
+    title: 'MHD App'
+  });
 });
+
+// GET Dashboard page
+router.get('/dashboard', authenticate, (req, res, next) => {
+  res.render('pages/dashboard', {
+    title: 'Dashboard',
+    firstName: req.user.firstName,
+  });
+})
 
 module.exports = router;
