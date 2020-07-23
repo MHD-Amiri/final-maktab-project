@@ -110,7 +110,20 @@ router.post('/register', (req, res, next) => {
               req.flash('success_msg', 'You are now registered, and can log in');
               res.redirect('/users/login');
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+              errors.push({
+                msg: "Something went wrong, please try again!"
+              });
+              res.render('pages/register', {
+                title: "register",
+                errors,
+                firstName,
+                lastName,
+                userName,
+                email,
+                phoneNumber
+              });
+            });
         }))
       }
     });
