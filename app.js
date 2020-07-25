@@ -40,20 +40,20 @@ require('./tools/initialization')();
 // initialize express-session to allow us track the logged-in user across sessions.
 app.use(session({
   key: 'user_sid',
-  secret: 'somerandomstuffs',
+  secret: 'keyboard cat',
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: false
 }));
 
 app.use(cookieParser());
 
-app.use(function (req, res, next) {
-  if (req.cookies.user_sid && !req.session.user) {
-    res.clearCookie("user_sid");
-  };
-  
-  next();
-});
+
+// app.use(function (req, res, next) {
+//   if (req.cookies.user_sid && !req.session.passport.user) {
+//     res.clearCookie("user_sid");
+//   };
+//   next();
+// });
 
 // Passport Midlleware
 app.use(passportModule.initialize());
