@@ -30,7 +30,7 @@ module.exports = function (passport) {
                                 message: 'Password is not Correct'
                             });
                         }
-                    });
+                    })
                 })
                 .catch(err => console.log(err));
         })

@@ -14,10 +14,21 @@ router.get('/', (req, res, next) => {
 
 // GET Dashboard page
 router.get('/dashboard', authenticate, (req, res, next) => {
+  if (req.cookies.user_sid && !req.session.passport.user) {
+    res.clearCookie("user_sid");
+  };
   res.render('pages/dashboard', {
     title: 'Dashboard',
     firstName: req.user.firstName,
+    lastName: req.user.lastName,
+    userName: req.user.userName,
+    password: req.user.password,
+    gender: req.user.gender,
+    phoneNumber: req.user.phoneNumber,
+    bio: req.user.bio
   });
+  console.log("cookie: ", req.cookies.user_sid);
+  console.log("session: ", req.session.passport.user);
 });
 
 // GET User Information for Dashboard
