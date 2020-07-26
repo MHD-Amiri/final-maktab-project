@@ -61,6 +61,9 @@ const UserShema = new Schema({
     },
     bio: {
         type: String
+    },
+    avatar: {
+        type: String
     }
 });
 
