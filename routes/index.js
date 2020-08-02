@@ -64,4 +64,32 @@ const storage = multer.diskStorage({
 const uploadAvatar = multer({
   storage: storage
 });
+
+// Handle avatar upload
+router.post('/uploadAvatar', authenticate, (req, res) => {
+  const upload = uploadAvatar.single('avatar');
+
+  upload(req, res, (err) => {
+    if (err) return res.status(400).send('err');
+    User.findById(req.session.passport.user, (err, user) => {
+      if (user.avatar) {
+        console.log('exist avatar:', user.avatar);
+        fs.unlinkSync(`public/images/${user.avatar}`);
+      };
+    });
+    User.findByIdAndUpdate(req.session.passport.user, {
+      avatar: req.file.filename
+    }, {
+      new: true
+    }, (err, user) => {
+      if (err) return res.status(400).send('err 1');
+      req.session.passport.user.avatar = req.file.filename;
+    });
+    User.findById(req.session.passport.user, (err, user) => {
+      res.json(user);
+      console.log(user.avatar);
+    });
+  })
+})
+
 module.exports = router;
