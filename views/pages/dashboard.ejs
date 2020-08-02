@@ -52,6 +52,7 @@
             </tbody>
         </table>
         <form action="/uploadAvatar" method="post" enctype="multipart/form-data">
+            <img src="/images/<%= avatar %>" alt="avatar">
             <input type="file" name="avatar" />
             <input type="submit" value="Get me the avatar!" class="btn btn-default">
         </form>

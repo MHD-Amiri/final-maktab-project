@@ -28,7 +28,8 @@ router.get('/dashboard', authenticate, (req, res, next) => {
     password: req.user.password,
     gender: req.user.gender,
     phoneNumber: req.user.phoneNumber,
-    bio: req.user.bio
+    bio: req.user.bio,
+    avatar: req.user.avatar
   });
   console.log("cookie: ", req.cookies.user_sid);
   console.log("session: ", req.session.passport.user);
