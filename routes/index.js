@@ -1,9 +1,12 @@
+const fs = require('fs');
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
 const authenticate = require('../config/auth');
 
 // User model
 const User = require("../models/user");
+const user = require('../models/user');
 
 // GET home page
 router.get('/', (req, res, next) => {
@@ -48,4 +51,17 @@ router.get('/dashboard/:userId', (req, res, next) => {
     });
 });
 
+// Config storage
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/images');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname)
+  }
+})
+
+const uploadAvatar = multer({
+  storage: storage
+});
 module.exports = router;
