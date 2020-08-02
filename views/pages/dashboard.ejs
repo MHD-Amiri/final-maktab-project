@@ -51,6 +51,10 @@
                 </td>
             </tbody>
         </table>
+        <form action="/uploadAvatar" method="post" enctype="multipart/form-data">
+            <input type="file" name="avatar" />
+            <input type="submit" value="Get me the avatar!" class="btn btn-default">
+        </form>
     </div>
 
     <%- include('../partials/scripts.ejs') %>
