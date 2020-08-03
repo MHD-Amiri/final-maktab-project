@@ -25,7 +25,6 @@ router.get('/dashboard', authenticate, (req, res, next) => {
     firstName: req.user.firstName,
     lastName: req.user.lastName,
     userName: req.user.userName,
-    password: req.user.password,
     gender: req.user.gender,
     phoneNumber: req.user.phoneNumber,
     bio: req.user.bio,
