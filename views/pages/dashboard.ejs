@@ -8,6 +8,15 @@
     <div class="container mt-5">
         <h1>Dashboard</h1>
         <h3>Wellcome to your Dashboard <%= firstName %></h3>
+        <div class="form-group">
+            <form action="/uploadAvatar" method="post" enctype="multipart/form-data">
+                <img class="avatar" src="/images/<%= avatar %>" alt="avatar">
+                <input type="file" name="avatar" class="form-control-file avatar-input" id="exampleInputFile"
+                    aria-describedby="fileHelp">
+                <small id="fileHelp" class="form-text text-muted">Plaese select your desired avatar.</small>
+                <input type="submit" value="Upload avatar" class="btn btn-success submit-avatar">
+            </form>
+        </div>
         <table class="table table-hover">
             <thead>
                 <tr class="table-primary">
@@ -41,17 +50,12 @@
                     <td><%= bio %></td>
                 </tr>
                 <td>
-                    <button type="button" class="btn btn-success">Edit</button>
-                    <button type="button" class="btn btn-success">Change Password</button>
+                    <a href="/users/logout" type="button" class="btn btn-success">Edit</a>
+                    <a type="button" class="btn btn-success">Change Password</a>
                     <a href="/users/logout" class="btn btn-danger">Log Out</a>
                 </td>
             </tbody>
         </table>
-        <form action="/uploadAvatar" method="post" enctype="multipart/form-data">
-            <img src="/images/<%= avatar %>" alt="avatar">
-            <input type="file" name="avatar" />
-            <input type="submit" value="Get me the avatar!" class="btn btn-default">
-        </form>
     </div>
 
     <%- include('../partials/scripts.ejs') %>
