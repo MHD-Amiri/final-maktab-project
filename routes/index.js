@@ -1,12 +1,12 @@
 const fs = require('fs');
 const express = require('express');
+const app = express();
 const router = express.Router();
 const multer = require('multer');
 const authenticate = require('../config/auth');
 
 // User model
 const User = require("../models/user");
-const user = require('../models/user');
 
 // GET home page
 router.get('/', (req, res, next) => {
@@ -32,23 +32,6 @@ router.get('/dashboard', authenticate, (req, res, next) => {
   });
   console.log("cookie: ", req.cookies.user_sid);
   console.log("session: ", req.session.passport.user);
-});
-
-// GET User Information for Dashboard
-router.get('/dashboard/:userId', (req, res, next) => {
-  const id = req.params.userId;
-  User.findById(id)
-    .exec()
-    .then(doc => {
-      console.log('From Database', doc);
-      res.status(200).json(doc);
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({
-        error: err
-      });
-    });
 });
 
 // Config storage
