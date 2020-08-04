@@ -40,20 +40,12 @@ require('./tools/initialization')();
 // initialize express-session to allow us track the logged-in user across sessions.
 app.use(session({
   key: 'user_sid',
-  secret: 'somerandomstuffs',
+  secret: 'keyboard cat',
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: false
 }));
 
 app.use(cookieParser());
-
-app.use(function (req, res, next) {
-  if (req.cookies.user_sid && !req.session.user) {
-    res.clearCookie("user_sid");
-  };
-  
-  next();
-});
 
 // Passport Midlleware
 app.use(passportModule.initialize());
@@ -73,7 +65,9 @@ app.use((req, res, next) => {
 // Routes
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const editRouter = require('./routes/edit');
 const passport = require('./config/passport');
+app.use('/dashboard/edit', editRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
