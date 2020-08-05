@@ -27,6 +27,7 @@ router.get('/dashboard', authenticate, (req, res, next) => {
     userName: req.user.userName,
     gender: req.user.gender,
     phoneNumber: req.user.phoneNumber,
+    createdAt: req.user.createdAt,
     bio: req.user.bio,
     avatar: req.user.avatar
   });
