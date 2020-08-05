@@ -66,8 +66,10 @@ app.use((req, res, next) => {
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const editRouter = require('./routes/edit');
+const articleRouter = require('./routes/article');
 const passport = require('./config/passport');
 app.use('/dashboard/edit', editRouter);
+app.use('/dashboard/article', articleRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
