@@ -3,7 +3,7 @@ const router = express.Router();
 const authenticate = require('../config/auth');
 
 // User model
-const User = require("../models/user");
+const User = require("../models/article");
 
 // GET Article page
 router.get('/', authenticate, (req, res, next) => {
