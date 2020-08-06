@@ -8,6 +8,7 @@ const User = require("../models/user");
 
 // GET Edit page
 router.get('/', authenticate, (req, res, next) => {
+  // if the cookie and session doesn't match delete cookie to force for login again
   if (req.cookies.user_sid && !req.session.passport.user) {
     res.clearCookie("user_sid");
   };
@@ -23,7 +24,7 @@ router.get('/', authenticate, (req, res, next) => {
 });
 
 // Edit user info Handler
-router.post('/', async (req, res, next) => {
+router.post('/', authenticate, async (req, res, next) => {
   try {
     const {
       firstName,
@@ -87,7 +88,6 @@ router.post('/', async (req, res, next) => {
       bio
     });
   }
-
 });
 
 module.exports = router;
