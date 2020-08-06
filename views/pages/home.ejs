@@ -13,6 +13,20 @@
       <a href="users/register" type="button" class="btn btn-warning btn-primary">Register</a>
     </div>
   </div>
+  <br><br>
+  <div class="container">
+    <div class="row">
+      <% for (let i = 0; i < articles.length; i++) { %>
+      <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+        <div class="card-header"><%= articles[i].author %></div>
+        <div class="card-body">
+          <h4 class="card-title"><%= articles[i].title %></h4>
+          <p class="card-text"><%= articles[i].content %></p>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
 
   <%- include('../partials/scripts.ejs') %>
 </body>
