@@ -7,31 +7,47 @@ const authenticate = require('../config/auth');
 
 // User model
 const User = require("../models/user");
+const Article = require("../models/article");
 
 // GET home page
 router.get('/', (req, res, next) => {
-  res.render('pages/home', {
-    title: 'MHD App'
-  });
+  // find all articles in database
+  Article.find({}, (err, articles) => {
+    if (err) return res.status(400).send('Something went wrong');
+    console.log(articles);
+    // render the page for client with information the page need
+    res.render('pages/home', {
+      title: 'MHD App',
+      articles
+    });
+  })
 });
 
 // GET Dashboard page
 router.get('/dashboard', authenticate, (req, res, next) => {
+  // if the cookie and session doesn't match delete cookie to force for login again
   if (req.cookies.user_sid && !req.session.passport.user) {
     res.clearCookie("user_sid");
   };
-  res.render('pages/dashboard', {
-    title: 'Dashboard',
-    firstName: req.user.firstName,
-    lastName: req.user.lastName,
-    userName: req.user.userName,
-    gender: req.user.gender,
-    phoneNumber: req.user.phoneNumber,
-    bio: req.user.bio,
-    avatar: req.user.avatar
-  });
-  console.log("cookie: ", req.cookies.user_sid);
-  console.log("session: ", req.session.passport.user);
+  // find all articles of user
+  Article.find({
+    author: req.session.passport.user
+  }, (err, articles) => {
+    if (err) return res.status(400).send('Something went wrong');
+    // render the page for client with information the page need
+    res.render('pages/dashboard', {
+      title: 'Dashboard',
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      userName: req.user.userName,
+      gender: req.user.gender,
+      phoneNumber: req.user.phoneNumber,
+      createdAt: req.user.createdAt,
+      bio: req.user.bio,
+      avatar: req.user.avatar,
+      articles
+    });
+  })
 });
 
 // Config storage
