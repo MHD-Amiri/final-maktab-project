@@ -7,12 +7,20 @@ const authenticate = require('../config/auth');
 
 // User model
 const User = require("../models/user");
+const Article = require("../models/article");
 
 // GET home page
 router.get('/', (req, res, next) => {
+  // find all articles in database
+  Article.find({}, (err, articles) => {
+    if (err) return res.status(400).send('Something went wrong');
+    console.log(articles);
+    // render the page for client with information the page need
   res.render('pages/home', {
-    title: 'MHD App'
+      title: 'MHD App',
+      articles
   });
+  })
 });
 
 // GET Dashboard page
