@@ -5,6 +5,10 @@
 <title><%= title %></title>
 
 <body>
+
+    <%- include('../partials/navbar.ejs') %>
+
+
     <div class="container mt-5">
         <h3>Wellcome to your Dashboard <%= firstName %></h3>
         <div class="form-group">
@@ -63,7 +67,7 @@
         </table>
         <a href="/dashboard/article" type="button" class="btn btn-primary btn-lg">New Article</a>
         <a href="/user/articles" type="button" class="btn btn-primary btn-lg">Your Articles</a>
-        <a href="/all/articles" type="button" class="btn btn-primary btn-lg">All Articles</a>
+        <a href="/all/Earticles" type="button" class="btn btn-primary btn-lg">All Articles</a>
     </div>
 
     <%- include('../partials/scripts.ejs') %>
