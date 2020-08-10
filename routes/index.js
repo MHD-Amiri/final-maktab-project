@@ -11,16 +11,10 @@ const Article = require("../models/article");
 
 // GET home page
 router.get('/', (req, res, next) => {
-  // find all articles in database
-  Article.find({}, (err, articles) => {
-    if (err) return res.status(400).send('Something went wrong');
-    console.log(articles);
-    // render the page for client with information the page need
+  // render the page for client
     res.render('pages/home', {
-      title: 'MHD App',
-      articles
+    title: 'MHD App'
     });
-  })
 });
 
 // GET Dashboard page
@@ -29,11 +23,6 @@ router.get('/dashboard', authenticate, (req, res, next) => {
   if (req.cookies.user_sid && !req.session.passport.user) {
     res.clearCookie("user_sid");
   };
-  // find all articles of user
-  Article.find({
-    author: req.session.passport.user
-  }, (err, articles) => {
-    if (err) return res.status(400).send('Something went wrong');
     // render the page for client with information the page need
     res.render('pages/dashboard', {
       title: 'Dashboard',
@@ -44,10 +33,8 @@ router.get('/dashboard', authenticate, (req, res, next) => {
       phoneNumber: req.user.phoneNumber,
       createdAt: req.user.createdAt,
       bio: req.user.bio,
-      avatar: req.user.avatar,
-      articles
+    avatar: req.user.avatar
     });
-  })
 });
 
 // Config storage
