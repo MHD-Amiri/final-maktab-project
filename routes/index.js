@@ -89,11 +89,13 @@ router.post('/uploadAvatar', authenticate, (req, res) => {
     }, (err, user) => {
       if (err) return res.status(400).send('User does not exist');
       req.session.passport.user.avatar = req.file.filename;
+        req.flash('success_msg', 'Your avatar successfully saved');
+        res.redirect('/dashboard');
     });
-    User.findById(req.session.passport.user, (err, user) => {
-      if (err) return res.status(400).send('Something went wrong!');
-      res.json(user);
-      console.log(user.avatar);
+    };
+
+  });
+});
     });
   })
 })
