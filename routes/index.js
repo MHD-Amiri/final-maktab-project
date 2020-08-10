@@ -57,9 +57,28 @@ router.post('/uploadAvatar', authenticate, (req, res) => {
 
   upload(req, res, (err) => {
     if (err) return res.status(400).send('err');
+    console.log(req.file);
+    if (req.file === undefined) {
+      let errors = [];
+      errors.push({
+        msg: "Please choose a file to upload!"
+      });
+      res.render('pages/dashboard', {
+        title: 'Dashboard',
+        errors,
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        userName: req.user.userName,
+        gender: req.user.gender,
+        phoneNumber: req.user.phoneNumber,
+        createdAt: req.user.createdAt,
+        bio: req.user.bio,
+        avatar: req.user.avatar
+      });
+    } else {
     User.findById(req.session.passport.user, (err, user) => {
       if (user.avatar) {
-        console.log('exist avatar:', user.avatar);
+          console.log('avatar exist:', user.avatar);
         fs.unlinkSync(`public/images/${user.avatar}`);
       };
     });
