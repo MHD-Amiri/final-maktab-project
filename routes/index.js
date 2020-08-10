@@ -96,6 +96,23 @@ router.post('/uploadAvatar', authenticate, (req, res) => {
 
   });
 });
+
+// GET user articles page
+router.get('/user/articles', authenticate, (req, res, next) => {
+  // if the cookie and session doesn't match delete cookie to force for login again
+  if (req.cookies.user_sid && !req.session.passport.user) {
+    res.clearCookie("user_sid");
+  };
+  // find all articles of user
+  Article.find({
+    author: req.session.passport.user
+  }, (err, articles) => {
+    if (err) return res.status(400).send('Something went wrong');
+    // render the page for client with information the page need
+    res.render('pages/articles', {
+      title: 'Your Articles',
+      avatar: req.user.avatar,
+      articles
     });
   })
 })
