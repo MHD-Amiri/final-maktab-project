@@ -23,18 +23,38 @@ router.get('/dashboard', authenticate, (req, res, next) => {
   if (req.cookies.user_sid && !req.session.passport.user) {
     res.clearCookie("user_sid");
   };
-  // render the page for client with information the page need
-  res.render('pages/dashboard', {
-    title: 'Dashboard',
-    firstName: req.user.firstName,
-    lastName: req.user.lastName,
-    userName: req.user.userName,
-    gender: req.user.gender,
-    phoneNumber: req.user.phoneNumber,
-    createdAt: req.user.createdAt,
-    bio: req.user.bio,
-    avatar: req.user.avatar
-  });
+  // if the user is admin
+  User.findById(req.session.passport.user, (err, user) => {
+    console.log(user.role);
+    if (user.role === 'admin') {
+      res.render('pages/adminDashboard', {
+        title: 'Admin Dashboard',
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        userName: req.user.userName,
+        gender: req.user.gender,
+        phoneNumber: req.user.phoneNumber,
+        createdAt: req.user.createdAt,
+        bio: req.user.bio,
+        avatar: req.user.avatar
+      });
+    } else {
+      // render the page for client with information the page need
+      res.render('pages/dashboard', {
+        title: 'Dashboard',
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        userName: req.user.userName,
+        gender: req.user.gender,
+        phoneNumber: req.user.phoneNumber,
+        createdAt: req.user.createdAt,
+        bio: req.user.bio,
+        avatar: req.user.avatar
+      });
+    }
+  })
+
+
 });
 
 // Config storage
